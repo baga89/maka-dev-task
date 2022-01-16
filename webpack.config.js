@@ -69,8 +69,8 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
-    watchContentBase: true,
     static: {
+      watch: true,
       directory: path.resolve(__dirname, 'dist'),
     },
   },
