@@ -1,7 +1,36 @@
-h1 {
-  color: blueviolet;
+/* Generic
+This is where reset, normalize & box-sizing styles go.
+*/
+@import url(./generic/_normalize.css);
+@import url(./generic/_reset.css);
+
+/* Elements
+Base HMTL elements are styled in this section (<body<, <h1>, <a>, <p>, <button> etc.)
+*/
+@import url(./elements/_buttons.css);
+
+/* Components
+Specific pieces of UI that are stylized. Typically used for global partial styling
+*/
+@import url(./components/slider.css);
+
+:root {
+  --primary: #ffab66;
+  --primary600: #ff9233;
+  --primary-container: #f5ece0;
 }
 
-::placeholder {
-  color: gray;
+body {
+  background-color: var(--primary-container);
+  font-family: 'Roboto', sans-serif;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary600);
+  transition: color 0.4s;
 }

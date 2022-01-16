@@ -2,6 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -9,7 +10,7 @@ module.exports = {
   },
   output: {
     filename: 'js/[name].bundle.js',
-    path: path.join(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist'),
     // assetModuleFilename: 'images/[name][ext]',
     clean: true,
   },
@@ -20,6 +21,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'src/index.html'),
       filename: path.resolve(__dirname, 'dist/index.html'),
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: path.resolve(__dirname, 'src/images'), to: path.resolve(__dirname, 'dist/images') }],
     }),
   ],
   module: {
@@ -48,6 +52,8 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
+        // Rules.generator.filename is the same as output.assetModuleFilename
+        // and works only with asset and asset/resource module types.
         generator: {
           filename: 'images/[name][ext]',
         },
@@ -63,8 +69,9 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
+    watchContentBase: true,
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.resolve(__dirname, 'dist'),
     },
   },
   optimization: {
